@@ -41,9 +41,9 @@ def postgres_lookup(query: str) -> str:
 
         connection = psycopg2.connect(
             host="localhost",
-            database="your_database",
-            user="your_user",
-            password="your_password",
+            database="testdb",
+            user="testuser",
+            password="testpass",
             port=5432
         )
         cursor = connection.cursor()
@@ -77,7 +77,7 @@ tools = [
     Tool(name="Web Search", func=web_search, description="Search the web using DuckDuckGo."),
     Tool(name="Square Root Calculator", func=calculate_square_root, description="Calculates the square root of a number."),
     Tool(name="Random Joke Generator", func=generate_joke, description="Generates a random joke."),
-    Tool(name="MySQL Lookup", func=mysql_lookup, description="Executes SQL queries in a MySQL database."),
+    Tool(name="MySQL Lookup", func=postgres_lookup, description="Executes SQL queries in a MySQL database. Always use this tool for any database-related questions. The input must be a valid SQL query"),
     Tool(name="Morse Code Converter", func=text_to_morse, description="Converts text to Morse code."),
 ]
 
