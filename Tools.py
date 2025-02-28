@@ -5,6 +5,7 @@ from langchain.tools import Tool
 from langchain_ollama import ChatOllama
 import math
 import random
+import psycopg2
 
 app = FastAPI(title="LangChain API with FastAPI & Ollama")
 
@@ -34,19 +35,27 @@ def generate_joke(_: str) -> str:
     ]
     return random.choice(jokes)
 
-def mysql_lookup(query: str) -> str:
-    """Executes a given SQL query on the database."""
+def postgres_lookup(query: str) -> str:
+    """Executes a given SQL query on a PostgreSQL database."""
     try:
-        connection = mysql.connector.connect(
+
+        connection = psycopg2.connect(
             host="localhost",
+            database="your_database",
             user="your_user",
             password="your_password",
-            database="your_database"
+            port=5432
         )
         cursor = connection.cursor()
+
+
         cursor.execute(query)
         results = cursor.fetchall()
+
+
+        cursor.close()
         connection.close()
+
         return str(results)
     except Exception as e:
         return f"Error: {str(e)}"
